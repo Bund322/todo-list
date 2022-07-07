@@ -19,7 +19,7 @@ ToDo list реализованный на HTML, CSS (SCSS) и чистом JavaS
 
 
 <p align="center">
-<img src="./readme_assets/p2.PNG" width="40%"></p>
+<img src="./readme_assets/p2.PNG" width="80%"></p>
 
 
 - Хранение задач реализованно с помощью веб-хранилища local storage.
