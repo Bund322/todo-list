@@ -1,0 +1,28 @@
+.section {
+    background: #2C3440;
+
+    box-shadow: 0px 10px 25px rgba(29, 52, 54, 0.08);
+    border-radius: 10px;
+
+    padding: 20px;
+
+    + * {
+        margin-top: 30px;
+    }
+}
+.section__h1 {
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 0.02em;
+
+    color: #29A19C;
+
+    + * {
+        margin-top: 20px;
+    }
+}
+@media screen and (max-width: 530px) {
+    .section__h1 {
+        font-size: 16px;
+    }
+}

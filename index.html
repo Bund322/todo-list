@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToDo</title>
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    <div class="page">
+        <section class="section today">
+            <h1 class="section__h1">Такс такс такс</h1>
+            <div class="today__data">
+                <div class="time">
+                    <p>На часах у нас</p>
+                    <div class="time__container">
+                        <img src="./img/clock.svg" alt="">
+                        <p id = "actuallyTime">00:00:00</p>
+                    </div>
+                </div>
+                <div class="date">
+                    <p>А сегодня у нас</p>
+                    <div class="date__container">
+                        <img src="./img/calendar.svg" alt="">
+                        <p id = "actuallyDate">5 апреля 2021</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="section tasks">
+            <h1 class="section__h1">Задачи</h1>
+            <ul id = "tasksList" class = "list-group">
+                
+            </ul>
+        </section>
+        <section class="section new-task">
+            <h1 class="section__h1">Добавить новую задачу</h1>
+            <div class="new-task-body">
+                <form id = "form">
+                    <div class="form-group">
+                        <p>Что нужно сделать?</p>
+                        <input type="text" class="form-control" id = "taskInput" placeholder="Полить цветы">
+                    </div>
+                    <button class="btn">Добавить</button>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script src="./script/script.js"></script>
+</body>
+</html>
