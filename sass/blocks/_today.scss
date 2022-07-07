@@ -1,0 +1,49 @@
+.today__data {
+    display: flex;
+    justify-content: space-between;
+}
+.time, .date {
+    p {
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.02em;
+
+        color: #F9F9F9;
+    }
+    p + *{
+        margin-top: 5px;
+    }
+} 
+
+
+.time__container,
+.date__container {
+    display: flex;
+    img + * {
+        margin-left: 10px;
+    }
+    p {
+        font-weight: 600;
+        font-size: 25px;
+        letter-spacing: 0.02em;
+
+        color: #F9F9F9;
+    }
+}
+.list-group {
+    padding: 0;
+}
+@media screen and (max-width: 530px) {
+    .today__data {
+        flex-direction: column;
+    }
+    .time + * {
+        margin-top: 20px;
+    }
+    .time__container,
+    .date__container {
+        p {
+            font-size: 20px;
+        }
+    }
+}
