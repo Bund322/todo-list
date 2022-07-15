@@ -105,11 +105,9 @@ input {
   .today__data {
     flex-direction: column;
   }
-
   .time + * {
     margin-top: 20px;
   }
-
   .time__container p,
 .date__container p {
     font-size: 20px;
