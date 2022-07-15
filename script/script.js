@@ -38,8 +38,11 @@ function clock () {
 const form = document.querySelector('#form');
 const formInput = document.querySelector('#taskInput');
 const taskList = document.querySelector('#tasksList');
+const taskListComplited = document.querySelector('#tasksListComplited');
 const emptyList = document.querySelector('#emptyList');
+const compliteH1 = document.querySelector('.section__h1--complite');
 let tasks = [];
+let complitedCount = 0;
 
 //Проверка local storage на наличие задач
 if(localStorage.getItem('tasks')) {
@@ -47,12 +50,19 @@ if(localStorage.getItem('tasks')) {
     tasks.forEach((task) => renderTask(task));
 }
 
+function checkComplited () {
+    complitedCount = 0;
+    tasks.forEach((task) => {
+        (task.done === true) ? complitedCount++ : null;
+    });
+}
+
 //рендер задачи на страницу
 function renderTask(task) {
     //Формируем css классы
     const cssClassLabel = task.done?'input-done done-check':'input-done';
     const cssClass = task.done?'list-group-item__check list-group-item__check--active':'list-group-item__check';
-
+    
     const taskTemplate = `
     <li id = "%idTask%" class="list-group-item">
         <div class="list-group-item__left">
@@ -66,7 +76,13 @@ function renderTask(task) {
     </li>
     `;
     const taskHTML = taskTemplate.replace('%task%', task.text).replace('%idTask%', task.id);
-    taskList.insertAdjacentHTML('beforeend', taskHTML);
+    if (task.done) {
+        compliteH1.innerText = 'Завершенные задачи';
+        taskListComplited.insertAdjacentHTML('beforeend', taskHTML);
+    } else {
+        taskList.insertAdjacentHTML('beforeend', taskHTML);
+    }
+    
 }
 
 //Проверка на существующие задачи
@@ -124,7 +140,10 @@ form.addEventListener('submit', (event) => {
 });
 
 //Удаление задачи
-taskList.addEventListener('click', (event) => {
+taskList.addEventListener('click',deleteTask);
+taskListComplited.addEventListener('click',deleteTask);
+
+function deleteTask (event) {
     if(event.target.dataset.action === 'delete') {
         const parentNode = event.target.closest('.list-group-item');
 
@@ -140,10 +159,13 @@ taskList.addEventListener('click', (event) => {
     }
     checkEmptyList();
     saveToLocalStorage();
-});
+}
 
 //Отмечаем завершенной задачу
-taskList.addEventListener('click', (event) => {
+taskList.addEventListener('click', addClick);
+taskListComplited.addEventListener('click', addClick);
+
+function addClick(event) {
     if(event.target.dataset.action === 'done') {
         const parentNode = event.target.closest('.list-group-item');
         
@@ -151,16 +173,50 @@ taskList.addEventListener('click', (event) => {
         const id = Number(parentNode.id);
 
         const task = tasks.find((task) => task.id === id);
-
+        
         //меняем с true на false и наоборот
         task.done = !task.done;
+        // console.log(task);
+
+        const cssClassLabel = task.done?'input-done done-check':'input-done';
+        const cssClass = task.done?'list-group-item__check list-group-item__check--active':'list-group-item__check';
+        //удаление задачи из разметки
+        parentNode.remove();
+        const taskTemplate = `
+        <li id = "%idTask%" class="list-group-item">
+            <div class="list-group-item__left">
+            <input type="checkbox" class="done" id = "done">
+            <label data-action = "done" for="done" class = "${cssClassLabel}"></label>
+                <span class = "${cssClass}">%task%</span>
+            </div>
+            <button data-action = "delete" class="btn-action delete-btn">
+                <img src="./img/trash.svg" alt="Delete">
+            </button>
+        </li>
+        `;
+        const taskHTML = taskTemplate.replace('%task%', task.text).replace('%idTask%', task.id);
+        
+        if(task.done) {
+            taskListComplited.insertAdjacentHTML('beforeend', taskHTML);
+        }
+        else {
+            taskList.insertAdjacentHTML('beforeend', taskHTML);
+        }
         
         const taskTitle = parentNode.querySelector('.list-group-item__check');
         const taskLabel = parentNode.querySelector('.input-done');
         taskLabel.classList.toggle('done-check');
         taskTitle.classList.toggle('list-group-item__check--active');
-    }
-});
 
+    }
+    // renderAllTasks();
+    saveToLocalStorage();
+    checkComplited();
+    if(!complitedCount) {
+        compliteH1.innerText = '';
+    } else {
+        compliteH1.innerText = 'Завершенные задачи';
+    }
+}
 
 
